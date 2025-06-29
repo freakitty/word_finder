@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Finder</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg-color: #171A17;
+            --card-color: #171A17;
+            --accent-color: #76E478;
+            --text-color: #76E478;
+            --input-bg: #171A17;
+            --input-border: #76E478;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            background-color: var(--card-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        input[type="number"] {
+            width: 80px;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            width: 100%;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00cc00;
+        }
+
+        .results {
+            margin-top: 2rem;
+            animation: typing 1s steps(40, end) 1;
+            white-space: pre-line;
+        }
+
+        .results ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .results li {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #007700;
+        }
+
+        .no-results {
+            margin-top: 1rem;
+            color: #ff4444;
+            text-align: center;
+        }
+
+        @keyframes typing {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+░█░█░█▀█░█▀▄░█▀▄ <br>       
+░█▄█░█░█░█▀▄░█░█ <br>       
+░▀░▀░▀▀▀░▀░▀░▀▀░ <br>       
+░█▀▀░▀█▀░█▀█░█▀▄░█▀▀░█▀▄ <br>
+░█▀▀░░█░░█░█░█░█░█▀▀░█▀▄ <br>
+░▀░░░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀</h1>
+        <form action="/" method="post">
+            <label for="length">Word Length</label>
+            <input type="number" name="length" id="length" placeholder="Ex: 6">
+
+            <label for="fixed">Fixed Letters (no space, ex: 1:u,4:s)</label>
+            <input type="text" name="fixed" id="fixed" placeholder="no space, ex: 1:u,4:s">
+
+            <label for="included">Letters Included (no space, ex: las)</label>
+            <input type="text" name="included" id="included" placeholder="no space, ex: las">
+
+            <label for="excluded">Letters Excluded (no space, ex: etr)</label>
+            <input type="text" name="excluded" id="excluded" placeholder="no space, ex: etr">
+
+            <button type="submit">Find Words</button>
+        </form>
+
+        {% if words %}
+        <div class="results">
+            <ul>
+                {% for word in words %}
+                    <li>{{ word }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% elif no_results %}
+        <div class="no-results">NO MATCH FOUND</div>
+        {% endif %}
+    </div>
+</body>
+</html>
